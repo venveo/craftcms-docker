@@ -5,7 +5,7 @@ ARG PHP_EXTS="pdo pdo_pgsql pdo_mysql pgsql gd"
 
 MAINTAINER Jason McCallister <jason@venveo.com>
 
-# install needed items (composer and php extensions)
+# install needed items (php extensions)
 RUN apt-get update \
     && apt-get install -y $BLD_PKGS \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \

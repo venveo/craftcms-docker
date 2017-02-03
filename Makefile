@@ -1,10 +1,20 @@
 .PHONY: craft build run ssh stop
 
+# Project information
+
 COMPANY := venveo
 PROJECT := project
+
+# Database information 
+
 DB_USER := craftcms
-DB_PREFIX := dev_$(COMPANY)
+DB_PREFIX := dev_
 DB_PASSWORD := CraftCMS1!
+MYSQL_VERSION := 5.7
+POSTGRES_VERSION := 9.5
+
+# Helpers
+
 MAKEPATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 PWD := $(dir $(MAKEPATH))
 
@@ -22,7 +32,7 @@ run:
 	-e POSTGRES_PASSWORD=$(DB_PASSWORD) \
 	-e POSTGRES_DB=$(DB_PREFIX)_$(PROJECT) \
 	-v $(PWD)storage/postgres:/var/lib/postgresql/data \
-	--name $(COMPANY)-$(PROJECT)-postgres postgres:9.5 \
+	--name $(COMPANY)-$(PROJECT)-postgres postgres:$(POSTGRES_VERSION) \
 	&& docker run --rm \
 	-d -p 3306:3306 \
 	-e MYSQL_USER=$(DB_USER) \
@@ -30,7 +40,7 @@ run:
 	-e MYSQL_PASSWORD=$(DB_PASSWORD) \
 	-e MYSQL_DATABASE=$(DB_PREFIX)_$(PROJECT) \
 	-v $(PWD)storage/mysql:/var/lib/mysql/ \
-	--name $(COMPANY)-$(PROJECT)-mysql mysql:5.7 \
+	--name $(COMPANY)-$(PROJECT)-mysql mysql:$(MYSQL_VERSION) \
 	&& docker run --rm \
 	-d -p 80:80 \
 	-e DB_DRIVER=mysql \
