@@ -3,7 +3,7 @@
 # Project information
 
 COMPANY := venveo
-PROJECT := new-project
+PROJECT := project
 
 # Database information
 
