@@ -59,4 +59,4 @@ ssh:
 	docker exec -it $(PROJECT)-craftcms bash
 
 stop:
-	docker stop $(PROJECT)-craftcms && docker stop $(COMPANY)-$(PROJECT)-postgres && docker stop $(COMPANY)-$(PROJECT)-mysql
+	docker stop $(PROJECT)-craftcms $(COMPANY)-$(PROJECT)-postgres $(COMPANY)-$(PROJECT)-mysql
