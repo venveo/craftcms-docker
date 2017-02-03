@@ -3,7 +3,7 @@
 # Project information
 
 COMPANY := venveo
-PROJECT := new-project-name
+PROJECT := docker-demo
 
 # Database information
 
@@ -28,13 +28,6 @@ build:
 
 run:
 	docker run --rm \
-	-d -p 5432:5432 \
-	-e POSTGRES_USER=$(DB_USER) \
-	-e POSTGRES_PASSWORD=$(DB_PASSWORD) \
-	-e POSTGRES_DB=$(DB_PREFIX)_$(PROJECT) \
-	-v $(PWD)storage/postgres:/var/lib/postgresql/data \
-	--name $(PROJECT)-postgres postgres:$(POSTGRES_VERSION) \
-	&& docker run --rm \
 	-d -p 3306:3306 \
 	-e MYSQL_USER=$(DB_USER) \
 	-e MYSQL_ROOT_PASSWORD=$(DB_PASSWORD) \
@@ -50,7 +43,6 @@ run:
 	-e DB_PASSWORD=$(DB_PASSWORD) \
 	-e DB_DATABASE=$(DB_PREFIX)_$(PROJECT) \
 	-e DB_SCHEMA=public \
-	--link $(PROJECT)-postgres \
 	--link $(PROJECT)-mysql \
 	--volume $(PWD)craft:/var/www \
 	--name $(PROJECT)-craftcms $(COMPANY)/$(PROJECT)
@@ -59,4 +51,4 @@ ssh:
 	docker exec -it $(PROJECT)-craftcms bash
 
 stop:
-	docker stop $(PROJECT)-craftcms $(PROJECT)-postgres $(PROJECT)-mysql
+	docker stop $(PROJECT)-craftcms $(PROJECT)-mysql
