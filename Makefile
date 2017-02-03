@@ -39,7 +39,7 @@ mysql:
 	-e MYSQL_ROOT_PASSWORD=$(DB_PASSWORD) \
 	-e MYSQL_PASSWORD=$(DB_PASSWORD) \
 	-e MYSQL_DATABASE=$(DB_PREFIX)_$(PROJECT) \
-	-v $(PWD)storage/mysql:/var/lib/mysql/ \
+	-v $(PWD)craft/storage/mysql:/var/lib/mysql/ \
 	--name $(PROJECT)-mysql mysql:$(MYSQL_VERSION)
 
 postgres:
