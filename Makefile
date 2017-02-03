@@ -8,7 +8,7 @@ PROJECT := project
 # Database information 
 
 DB_USER := craftcms
-DB_PREFIX := dev_
+DB_PREFIX := dev
 DB_PASSWORD := CraftCMS1!
 MYSQL_VERSION := 5.7
 POSTGRES_VERSION := 9.5
@@ -20,7 +20,8 @@ PWD := $(dir $(MAKEPATH))
 
 craft:
 	composer create-project craftcms/craft craft -s beta \
-	&& rm craft/.env
+	&& rm craft/.env \
+	&& mv craft/web craft/html
 
 build:
 	docker build -t $(COMPANY)/$(PROJECT) .
