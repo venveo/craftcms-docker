@@ -5,11 +5,10 @@ Our starter project for Docker powered Craft CMS websites
 ## Installation
 
 1. Clone the respository into the a new project (e.g `our-company-website`)
-2. `cd` to `our-company-website` and run `make craft`. This will use composer to create new new Craft CMS project into the `craft` directory
+2. `cd` to `our-company-website` and run `make craft`. This will use composer to create new new Craft CMS project into the `craft` directory. This will also move the default `craft\web` directory to `craft\html` to ensure compatability with the official PHP Apache image
 3. Open `Makefile` and change `COMPANY`, `PROJECT`, `DB_USER` and `DB_PASSWORD` to meet your requirements
 4. Run `make build`. This will create a new Docker image using the Company and Project name (e.g venveo/new-project)
-5. Rename the `craft/web` directory to `craft/html`. This is temporary and may change in the future
-6. After the build completes, run the command `make run`. This will create three new containers. One for PHP Apache, Postgres and MySQL
+5. After the build completes, run the command `make run`. This will create three new containers. One for PHP Apache, Postgres and MySQL
 6. Open up a browser and visit [http://localhost/index.php/admin/install](http://localhost/index.php/admin/install)
 
 ### Makefile
