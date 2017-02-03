@@ -3,7 +3,7 @@
 # Project information
 
 COMPANY := venveo
-PROJECT := new-project
+PROJECT := new-project-name
 
 # Database information
 
@@ -45,7 +45,7 @@ run:
 	&& docker run --rm \
 	-d -p 80:80 \
 	-e DB_DRIVER=mysql \
-	-e DB_SERVER=$(COMPANY)-$(PROJECT)-mysql \
+	-e DB_SERVER=$(PROJECT)-mysql \
 	-e DB_USER=$(DB_USER) \
 	-e DB_PASSWORD=$(DB_PASSWORD) \
 	-e DB_DATABASE=$(DB_PREFIX)_$(PROJECT) \
