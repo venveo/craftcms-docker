@@ -20,36 +20,8 @@ PWD := $(dir $(MAKEPATH))
 
 install: craft build dev
 
-craft:
-	composer create-project craftcms/craft craft -s beta \
-	&& rm craft/.env \
-	&& mv craft/web craft/html
-
 build:
 	docker build -t $(COMPANY)/$(PROJECT) .
-
-dev: mysql cms-mysql
-
-dev-postgres: postgres cms-postgres
-
-mysql:
-	docker run --rm \
-	-d -p 3306:3306 \
-	-e MYSQL_USER=$(DB_USER) \
-	-e MYSQL_ROOT_PASSWORD=$(DB_PASSWORD) \
-	-e MYSQL_PASSWORD=$(DB_PASSWORD) \
-	-e MYSQL_DATABASE=$(DB_PREFIX)_$(PROJECT) \
-	-v $(PWD)craft/storage/mysql:/var/lib/mysql/ \
-	--name $(PROJECT)-mysql mysql:$(MYSQL_VERSION)
-
-postgres:
-	docker run --rm \
-	-d -p 5432:5432 \
-	-e POSTGRES_USER=$(DB_USER) \
-	-e POSTGRES_PASSWORD=$(DB_PASSWORD) \
-	-e POSTGRES_DB=$(DB_PREFIX)_$(PROJECT) \
-	-v $(PWD)craft/storage/postgres:/var/lib/postgresql/data \
-	--name $(PROJECT)-postgres postgres:$(POSTGRES_VERSION)
 
 cms-mysql:
 	docker run --rm \
@@ -75,6 +47,34 @@ cms-postgres:
 	--link $(PROJECT)-postgres \
 	--volume $(PWD)craft:/var/www \
 	--name $(PROJECT)-craftcms $(COMPANY)/$(PROJECT)
+
+craft:
+	composer create-project craftcms/craft craft -s beta \
+	&& rm craft/.env \
+	&& mv craft/web craft/html
+
+dev: mysql cms-mysql
+
+dev-postgres: postgres cms-postgres
+
+mysql:
+	docker run --rm \
+	-d -p 3306:3306 \
+	-e MYSQL_USER=$(DB_USER) \
+	-e MYSQL_ROOT_PASSWORD=$(DB_PASSWORD) \
+	-e MYSQL_PASSWORD=$(DB_PASSWORD) \
+	-e MYSQL_DATABASE=$(DB_PREFIX)_$(PROJECT) \
+	-v $(PWD)craft/storage/mysql:/var/lib/mysql/ \
+	--name $(PROJECT)-mysql mysql:$(MYSQL_VERSION)
+
+postgres:
+	docker run --rm \
+	-d -p 5432:5432 \
+	-e POSTGRES_USER=$(DB_USER) \
+	-e POSTGRES_PASSWORD=$(DB_PASSWORD) \
+	-e POSTGRES_DB=$(DB_PREFIX)_$(PROJECT) \
+	-v $(PWD)craft/storage/postgres:/var/lib/postgresql/data \
+	--name $(PROJECT)-postgres postgres:$(POSTGRES_VERSION)
 
 ssh:
 	docker exec -it $(PROJECT)-craftcms bash
