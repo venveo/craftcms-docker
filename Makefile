@@ -19,7 +19,7 @@ run:
 	docker run --rm \
 	-d -p 5432:5432 \
 	-e POSTGRES_USER=$(DB_USER) \
-	-e POSTGRES_PASSWORD=Password1! \
+	-e POSTGRES_PASSWORD=$(DB_PASSWORD) \
 	-e POSTGRES_DB=$(DB_PREFIX)_$(PROJECT) \
 	-v $(PWD)storage/postgres:/var/lib/postgresql/data \
 	--name $(COMPANY)-$(PROJECT)-postgres postgres:9.5 \
@@ -35,7 +35,7 @@ run:
 	-d -p 80:80 \
 	-e DB_DRIVER=mysql \
 	-e DB_SERVER=$(COMPANY)-$(PROJECT)-mysql \
-	-e DB_USER=craftcms \
+	-e DB_USER=$(DB_USER) \
 	-e DB_PASSWORD=$(DB_PASSWORD) \
 	-e DB_DATABASE=$(DB_PREFIX)_$(PROJECT) \
 	-e DB_SCHEMA=public \
